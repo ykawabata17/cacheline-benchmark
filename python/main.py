@@ -1,20 +1,23 @@
+import sys
 import timeit
 
-ITERATIONS = 5
+# コマンドライン引数からsizeとiterationsを取得
+SIZE = int(sys.argv[1])
+ITERATIONS = int(sys.argv[2])
 
 # 配列の初期化
-a = [[0] * 10240 for _ in range(10240)]
+a = [[0] * SIZE for _ in range(SIZE)]
 
 # 行方向から先に処理する
 def row_col(a):
-    for i in range(10240):
-        for j in range(10240):
+    for i in range(SIZE):
+        for j in range(SIZE):
             a[i][j] += 1
 
 # 列方向から先に処理する
 def col_row(a):
-    for i in range(10240):
-        for j in range(10240):
+    for i in range(SIZE):
+        for j in range(SIZE):
             a[j][i] += 1
 
 if __name__ == '__main__':

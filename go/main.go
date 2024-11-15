@@ -1,62 +1,64 @@
 package main
 
 import (
-    "fmt"
-    "time"
-)
-
-const (
-	SIZE = 10240
-    ITERATIONS = 5
+	"flag"
+	"fmt"
+	"time"
+    "strconv"
 )
 
 func main() {
-    a := setup()
+    // コマンドライン引数からsizeとiterationsを取得
+    flag.Parse()
+    size, _ := strconv.Atoi(flag.Arg(0))
+    iterations, _ := strconv.Atoi(flag.Arg(1))
+
+    a := setup(size)
 
     var rowColTotalTime time.Duration
-    for iter := 0; iter < ITERATIONS; iter++ {
+    for iter := 0; iter < iterations; iter++ {
         start := time.Now()
-        rowCol(a)
+        rowCol(size, a)
         elapsed := time.Since(start)
         rowColTotalTime += elapsed
     }
-    rowColAvgTime := rowColTotalTime.Seconds() / float64(ITERATIONS)
+    rowColAvgTime := rowColTotalTime.Seconds() / float64(iterations)
 
     var colRowTotalTime time.Duration
-    for iter := 0; iter < ITERATIONS; iter++ {
+    for iter := 0; iter < iterations; iter++ {
         start := time.Now()
-        colRow(a)
+        colRow(size, a)
         elapsed := time.Since(start)
         colRowTotalTime += elapsed
     }
-    colRowAvgTime := colRowTotalTime.Seconds() / float64(ITERATIONS)
+    colRowAvgTime := colRowTotalTime.Seconds() / float64(iterations)
 
     fmt.Printf("Average row_col function time: %.5f seconds\n", rowColAvgTime)
     fmt.Printf("Average col_row function time: %.5f seconds\n", colRowAvgTime)
 }
 
 // 配列の初期化
-func setup() [][]int {
-    a := make([][]int, SIZE)
-    for i := 0; i < SIZE; i++ {
-        a[i] = make([]int, SIZE)
+func setup(size int) [][]int {
+    a := make([][]int, size)
+    for i := 0; i < size; i++ {
+        a[i] = make([]int, size)
     }
     return a
 }
 
 // 行方向から先に処理する
-func rowCol(a [][]int) {
-    for i := 0; i < SIZE; i++ {
-        for j := 0; j < SIZE; j++ {
+func rowCol(size int, a [][]int) {
+    for i := 0; i < size; i++ {
+        for j := 0; j < size; j++ {
             a[i][j] += 1
         }
     }
 }
 
 // 列方向から先に処理する
-func colRow(a [][]int) {
-    for i := 0; i < SIZE; i++ {
-        for j := 0; j < SIZE; j++ {
+func colRow(size int, a [][]int) {
+    for i := 0; i < size; i++ {
+        for j := 0; j < size; j++ {
             a[j][i] += 1
         }
     }

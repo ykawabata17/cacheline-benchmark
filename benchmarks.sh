@@ -1,31 +1,63 @@
 #!/bin/bash
 
+validate_input() {
+  local input=$1
+  if [[ ! "$input" =~ ^[1-9][0-9]*$ ]]; then
+    echo "エラー: 整数値を1以上で入力してください。"
+    return 1
+  fi
+  return 0
+}
+
+# size の入力とバリデーション
+echo "二次元配列のサイズ（行数と列数）を入力してください:"
+while true; do
+  read -p "サイズ: " size
+  if validate_input "$size"; then
+    break
+  fi
+done
+
+# count の入力とバリデーション
+echo "平均を取るための処理の繰り返し回数を入力してください:"
+while true; do
+  read -p "繰り返し回数: " count
+  if validate_input "$count"; then
+    break
+  fi
+done
+
+echo "入力されたサイズ: $size"
+echo "入力された繰り返し回数: $count"
+
 languages=("python" "ruby" "go" "rust" "c")
 
 echo "Language,Row_Col_Time,Col_Row_Time" > results.csv
 
 base_dir=$(pwd)
 
+echo "ベンチマークを開始します..."
+
 for lang in "${languages[@]}"
 do
     case "$lang" in
         "python")
-            cmd="python3 $base_dir/python/main.py"
+            cmd="python3 $base_dir/python/main.py $size $count"
             ;;
         "ruby")
-            cmd="ruby $base_dir/ruby/main.rb"
+            cmd="ruby $base_dir/ruby/main.rb $size $count"
             ;;
         "go")
             (cd "$base_dir/go" && go build -o main main.go)
-            cmd="$base_dir/go/main"
+            cmd="$base_dir/go/main $size $count"
             ;;
         "rust")
             (cd "$base_dir/rust" && cargo build --release)
-            cmd="$base_dir/rust/target/release/main"
+            cmd="$base_dir/rust/target/release/main $size $count"
             ;;
         "c")
             (cd "$base_dir/c" && gcc -O3 -o main main.c)
-            cmd="$base_dir/c/main"
+            cmd="$base_dir/c/main $size $count"
             ;;
     esac
 

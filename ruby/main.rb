@@ -1,6 +1,8 @@
 require 'benchmark'
 
-SIZE = 10240
+# コマンドライン引数からsizeとiterationsを取得
+SIZE = ARGV[0].to_i
+ITERATIONS = ARGV[1].to_i
 
 # 配列の初期化
 def setup
@@ -25,9 +27,7 @@ def col_row(a)
   end
 end
 
-ITERATIONS = 5  # 実行回数
-
-def average_benchmark(iterations)
+def benchmark(iterations)
   row_col_times = []
   col_row_times = []
 
@@ -48,4 +48,4 @@ def average_benchmark(iterations)
   puts "Average col_row function time: #{average_col_row_time.round(5)} seconds"
 end
 
-average_benchmark(ITERATIONS)
+benchmark(ITERATIONS)
