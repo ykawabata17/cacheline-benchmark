@@ -47,6 +47,10 @@ do
         "ruby")
             cmd="ruby $base_dir/ruby/main.rb $size $count"
             ;;
+        "c")
+            (cd "$base_dir/c" && gcc -O3 -o main main.c)
+            cmd="$base_dir/c/main $size $count"
+            ;;
         "go")
             (cd "$base_dir/go" && go build -o main main.go)
             cmd="$base_dir/go/main $size $count"
@@ -54,10 +58,6 @@ do
         "rust")
             (cd "$base_dir/rust" && cargo build --release)
             cmd="$base_dir/rust/target/release/main $size $count"
-            ;;
-        "c")
-            (cd "$base_dir/c" && gcc -O3 -o main main.c)
-            cmd="$base_dir/c/main $size $count"
             ;;
     esac
 
