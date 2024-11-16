@@ -30,7 +30,7 @@ done
 echo "入力されたサイズ: $size"
 echo "入力された繰り返し回数: $count"
 
-languages=("python" "ruby" "go" "rust" "c")
+languages=("python" "ruby" "c" "go" "rust")
 
 echo "Language,Row_Col_Time,Col_Row_Time" > results.csv
 
