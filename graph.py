@@ -8,14 +8,14 @@ def graph_row_col_ratio(data):
     plt.title("行先行と列先行の倍率比較")
     plt.xlabel("言語")
     plt.ylabel("行先行 / 列先行")
-    plt.show()
+    plt.savefig("./graph/row_col_ratio.png")
 
 def graph_compare_to_c(data):
     # 対数スケールで描画
     plt.figure(figsize=(10, 6))
     x = range(len(data))
-    plt.bar(x, data["Row_Col_vs_C"], width=0.4, label="Row_Col vs C", align='center', log=True)
-    plt.bar(x, data["Col_Row_vs_C"], width=0.4, label="Col_Row vs C", align='edge', log=True)
+    plt.bar(x, data["Row_Col_Relative_Percentage_To_C"], width=0.4, label="Row_Col", align='center', log=True)
+    plt.bar(x, data["Col_Row_Relative_Percentage_To_C"], width=0.4, label="Col_Row", align='edge', log=True)
 
     # ラベルの設定
     plt.xticks(x, data["Language"])
@@ -25,13 +25,13 @@ def graph_compare_to_c(data):
     plt.ylabel("C言語とのパフォーマンス比[%]")
     plt.legend()
     plt.grid(True, which="both", linestyle="--", linewidth=0.5)
-    plt.show()
+    plt.savefig("./graph/compare_to_c.png")
 
 def main():
     data = pd.read_csv('results.csv')
     data["Ratio"] = data["Col_Row_Time"] / data["Row_Col_Time"]
-    data["Row_Col_vs_C"] = data["Row_Col_Time"] / data.loc[data["Language"] == "c", "Row_Col_Time"].values[0] * 100
-    data["Col_Row_vs_C"] = data["Col_Row_Time"] / data.loc[data["Language"] == "c", "Col_Row_Time"].values[0] * 100
+    data["Row_Col_Relative_Percentage_To_C"] = data["Row_Col_Time"] / data.loc[data["Language"] == "c", "Row_Col_Time"].values[0] * 100
+    data["Col_Row_Relative_Percentage_To_C"] = data["Col_Row_Time"] / data.loc[data["Language"] == "c", "Col_Row_Time"].values[0] * 100
 
     graph_row_col_ratio(data)
     graph_compare_to_c(data)
