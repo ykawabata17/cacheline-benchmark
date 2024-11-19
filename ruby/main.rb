@@ -3,6 +3,7 @@ require 'benchmark'
 # コマンドライン引数からsizeとiterationsを取得
 SIZE = ARGV[0].to_i
 ITERATIONS = ARGV[1].to_i
+WARMUP_COUNT = ARGV[2].to_i
 
 # 配列の初期化
 def setup
@@ -48,4 +49,10 @@ def benchmark(iterations)
   puts "Average col_row function time: #{average_col_row_time.round(5)} seconds"
 end
 
+for i in 0..WARMUP_COUNT
+  a = setup
+  row_col(a)
+  a = setup
+  col_row(a)
+end
 benchmark(ITERATIONS)
