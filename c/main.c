@@ -25,14 +25,6 @@ int** setup(int size) {
     return a;
 }
 
-// メモリの解放
-void cleanup(int size, int **a) {
-    if (a != NULL) {
-        free(a[0]); // data のメモリ解放
-        free(a);    // ポインタ配列 a のメモリ解放
-    }
-}
-
 // 行方向から先に処理する
 void row_col(int size, int **a) {
     for (int i = 0; i < size; i++) {
@@ -62,21 +54,20 @@ int main(int _argc, char *argv[]) {
     for (int iter = 0; iter < iterations; iter++) {
         // row_col関数の実行
         int **a = setup(size);
-        clock_t start = clock();
+        struct timespec start, end;
+        clock_gettime(CLOCK_MONOTONIC, &start);
         row_col(size, a);
-        clock_t end = clock();
-        double duration = (double)(end - start) / CLOCKS_PER_SEC;
-        total_row_col_time += duration;
-        cleanup(size, a);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        double elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+        total_row_col_time += elapsed;
 
         // col_row関数の実行
         a = setup(size);
-        start = clock();
+        clock_gettime(CLOCK_MONOTONIC, &start);
         col_row(size, a);
-        end = clock();
-        duration = (double)(end - start) / CLOCKS_PER_SEC;
-        total_col_row_time += duration;
-        cleanup(size, a);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+        total_col_row_time += elapsed;
     }
 
     double avg_row_col_time = total_row_col_time / iterations;
