@@ -48,7 +48,7 @@ do
             cmd="ruby $base_dir/ruby/main.rb $size $count"
             ;;
         "c")
-            (cd "$base_dir/c" && gcc -O3 -march=native -mtune=native -o main main.c)
+            (cd "$base_dir/c" && gcc -O1 -march=native -mtune=native -o main main.c)
             cmd="$base_dir/c/main $size $count"
             ;;
         "go")

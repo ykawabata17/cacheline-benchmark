@@ -9,26 +9,28 @@ int** setup(int size) {
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < size; i++) {
-        a[i] = malloc(size * sizeof(int));
-        if (a[i] == NULL) {
-            fprintf(stderr, "Memory allocation failed.\n");
-            exit(EXIT_FAILURE);
-        }
-        // 配列を0で初期化
-        for (int j = 0; j < size; j++) {
-            a[i][j] = 0;
-        }
+
+    // size * size 分のメモリを一度に確保する
+    int *data = calloc(size * size, sizeof(int));
+    if (data == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
     }
+
+    // ポインタ配列 a[] を適切な位置に設定
+    for (int i = 0; i < size; i++) {
+        a[i] = data + i * size;
+    }
+
     return a;
 }
 
 // メモリの解放
 void cleanup(int size, int **a) {
-    for (int i = 0; i < size; i++) {
-        free(a[i]);
+    if (a != NULL) {
+        free(a[0]); // data のメモリ解放
+        free(a);    // ポインタ配列 a のメモリ解放
     }
-    free(a);
 }
 
 // 行方向から先に処理する
@@ -49,7 +51,7 @@ void col_row(int size, int **a) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(int _argc, char *argv[]) {
     // コマンドライン引数からsizeとiterationsを取得
     int size = atoi(argv[1]);
     int iterations = atoi(argv[2]);
