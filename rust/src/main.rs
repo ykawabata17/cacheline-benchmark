@@ -7,6 +7,7 @@ fn setup(size: usize) -> Vec<Vec<i32>> {
 }
 
 // 行方向から先に処理する
+#[inline(never)]
 fn row_col(size: usize, a: &mut Vec<Vec<i32>>) {
     for i in 0..size {
         for j in 0..size {
@@ -16,6 +17,7 @@ fn row_col(size: usize, a: &mut Vec<Vec<i32>>) {
 }
 
 // 列方向から先に処理する
+#[inline(never)]
 fn col_row(size: usize, a: &mut Vec<Vec<i32>>) {
     for i in 0..size {
         for j in 0..size {

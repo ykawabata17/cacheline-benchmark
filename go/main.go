@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strconv"
 	"time"
-    "strconv"
 )
 
 func main() {
@@ -47,6 +47,7 @@ func setup(size int) [][]int {
 }
 
 // 行方向から先に処理する
+//go:noinline
 func rowCol(size int, a [][]int) {
     for i := 0; i < size; i++ {
         for j := 0; j < size; j++ {
@@ -56,6 +57,7 @@ func rowCol(size int, a [][]int) {
 }
 
 // 列方向から先に処理する
+//go:noinline
 func colRow(size int, a [][]int) {
     for i := 0; i < size; i++ {
         for j := 0; j < size; j++ {
