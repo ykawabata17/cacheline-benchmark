@@ -4,7 +4,6 @@ import timeit
 # コマンドライン引数からsizeとiterationsを取得
 SIZE = int(sys.argv[1])
 ITERATIONS = int(sys.argv[2])
-WARMUP_COUNT = int(sys.argv[3])
 
 # 配列の初期化
 a = [[0] * SIZE for _ in range(SIZE)]
@@ -22,11 +21,6 @@ def col_row(a):
             a[j][i] += 1
 
 if __name__ == '__main__':
-    # ウォームアップ
-    for _ in range(WARMUP_COUNT):
-        row_col(a)
-        col_row(a)
-
     row_col_time = timeit.timeit("row_col(a)", setup="from __main__ import row_col, a", number=ITERATIONS)
     col_row_time = timeit.timeit("col_row(a)", setup="from __main__ import col_row, a", number=ITERATIONS)
 

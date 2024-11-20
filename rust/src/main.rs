@@ -29,20 +29,11 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let size = args[1].parse::<usize>().unwrap();
     let iterations = args[2].parse::<usize>().unwrap();
-    let warmup_count = args[3].parse::<usize>().unwrap();
 
     let mut total_row_col_time = Duration::new(0, 0);
     let mut total_col_row_time = Duration::new(0, 0);
 
-    // ウォームアップ
-    for _iter in 0..warmup_count {
-        let mut a = setup(size);
-        row_col(size, &mut a);
-        let mut a = setup(size);
-        col_row(size, &mut a);
-    }
-
-    for _iter in 0..iterations {
+    for _iter in 1..=iterations {
 
         // row_col関数の実行
         let mut a = setup(size);

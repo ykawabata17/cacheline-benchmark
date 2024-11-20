@@ -12,21 +12,11 @@ func main() {
     flag.Parse()
     size, _ := strconv.Atoi(flag.Arg(0))
     iterations, _ := strconv.Atoi(flag.Arg(1))
-    warmupCount, _ := strconv.Atoi(flag.Arg(2))
 
-    // ウォームアップ
-    for iter := 0; iter < warmupCount; iter++ {
-        a := setup(size)
-        rowCol(size, a)
-    }
-    for iter := 0; iter < warmupCount; iter++ {
-        a := setup(size)
-        colRow(size, a)
-    }
+    a := setup(size)
 
     var rowColTotalTime time.Duration
     for iter := 0; iter < iterations; iter++ {
-        a := setup(size)
         start := time.Now()
         rowCol(size, a)
         elapsed := time.Since(start)
@@ -36,7 +26,6 @@ func main() {
 
     var colRowTotalTime time.Duration
     for iter := 0; iter < iterations; iter++ {
-        a := setup(size)
         start := time.Now()
         colRow(size, a)
         elapsed := time.Since(start)

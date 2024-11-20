@@ -38,28 +38,26 @@ base_dir=$(pwd)
 
 echo "ベンチマークを開始します..."
 
-warmup_counts=3
-
 for lang in "${languages[@]}"
 do
     case "$lang" in
         "python")
-            cmd="python3 $base_dir/python/main.py $size $count $warmup_counts"
+            cmd="python3 $base_dir/python/main.py $size $count"
             ;;
         "ruby")
-            cmd="ruby $base_dir/ruby/main.rb $size $count $warmup_counts"
+            cmd="ruby $base_dir/ruby/main.rb $size $count"
             ;;
         "c")
             (cd "$base_dir/c" && gcc -O1 -march=native -mtune=native -o main main.c)
-            cmd="$base_dir/c/main $size $count $warmup_counts"
+            cmd="$base_dir/c/main $size $count"
             ;;
         "go")
             (cd "$base_dir/go" && go build -o main main.go)
-            cmd="$base_dir/go/main $size $count $warmup_counts"
+            cmd="$base_dir/go/main $size $count"
             ;;
         "rust")
             (cd "$base_dir/rust" && cargo build --release)
-            cmd="$base_dir/rust/target/release/main $size $count $warmup_counts"
+            cmd="$base_dir/rust/target/release/main $size $count"
             ;;
     esac
 
