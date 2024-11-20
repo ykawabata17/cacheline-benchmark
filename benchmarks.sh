@@ -30,7 +30,7 @@ done
 echo "入力されたサイズ: $size"
 echo "入力された繰り返し回数: $count"
 
-languages=("python" "ruby" "c" "go" "rust")
+languages=("Python" "Ruby" "C" "Go" "Rust")
 
 echo "Language,Row_Col_Time,Col_Row_Time" > results.csv
 
@@ -41,21 +41,21 @@ echo "ベンチマークを開始します..."
 for lang in "${languages[@]}"
 do
     case "$lang" in
-        "python")
+        "Python")
             cmd="python3 $base_dir/python/main.py $size $count"
             ;;
-        "ruby")
+        "Ruby")
             cmd="ruby $base_dir/ruby/main.rb $size $count"
             ;;
-        "c")
+        "C")
             (cd "$base_dir/c" && gcc -O1 -march=native -mtune=native -o main main.c)
             cmd="$base_dir/c/main $size $count"
             ;;
-        "go")
+        "Go")
             (cd "$base_dir/go" && go build -o main main.go)
             cmd="$base_dir/go/main $size $count"
             ;;
-        "rust")
+        "Rust")
             (cd "$base_dir/rust" && cargo build --release)
             cmd="$base_dir/rust/target/release/main $size $count"
             ;;
