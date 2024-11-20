@@ -25,6 +25,14 @@ int** setup(int size) {
     return a;
 }
 
+// メモリの解放
+void cleanup(int size, int **a) {
+    if (a != NULL) {
+        free(a[0]); // data のメモリ解放
+        free(a);    // ポインタ配列 a のメモリ解放
+    }
+}
+
 // 行方向から先に処理する
 void row_col(int size, int **a) {
     for (int i = 0; i < size; i++) {
@@ -58,6 +66,7 @@ int main(int _argc, char *argv[]) {
         clock_gettime(CLOCK_MONOTONIC, &start);
         row_col(size, a);
         clock_gettime(CLOCK_MONOTONIC, &end);
+        cleanup(size, a);
         double elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
         total_row_col_time += elapsed;
 
@@ -66,6 +75,7 @@ int main(int _argc, char *argv[]) {
         clock_gettime(CLOCK_MONOTONIC, &start);
         col_row(size, a);
         clock_gettime(CLOCK_MONOTONIC, &end);
+        cleanup(size, a);
         elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
         total_col_row_time += elapsed;
     }
