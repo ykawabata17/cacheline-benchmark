@@ -38,17 +38,17 @@ func main() {
 }
 
 // 配列の初期化
-func setup(size int) [][]int {
-    a := make([][]int, size)
+func setup(size int) [][]int64 {
+    a := make([][]int64, size)
     for i := 0; i < size; i++ {
-        a[i] = make([]int, size)
+        a[i] = make([]int64, size)
     }
     return a
 }
 
 // 行方向から先に処理する
 //go:noinline
-func rowCol(size int, a [][]int) {
+func rowCol(size int, a [][]int64) {
     for i := 0; i < size; i++ {
         for j := 0; j < size; j++ {
             a[i][j] += 1
@@ -58,7 +58,7 @@ func rowCol(size int, a [][]int) {
 
 // 列方向から先に処理する
 //go:noinline
-func colRow(size int, a [][]int) {
+func colRow(size int, a [][]int64) {
     for i := 0; i < size; i++ {
         for j := 0; j < size; j++ {
             a[j][i] += 1

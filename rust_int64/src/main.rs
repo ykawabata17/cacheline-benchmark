@@ -2,13 +2,12 @@ use std::time::{Duration, Instant};
 use std::env;
 
 // 配列の初期化
-fn setup(size: usize) -> Vec<Vec<i32>> {
+fn setup(size: usize) -> Vec<Vec<i64>> {
     vec![vec![0; size]; size]
 }
 
 // 行方向から先に処理する
-#[inline(never)]
-fn row_col(size: usize, a: &mut Vec<Vec<i32>>) {
+fn row_col(size: usize, a: &mut Vec<Vec<i64>>) {
     for i in 0..size {
         for j in 0..size {
             a[i][j] += 1;
@@ -17,8 +16,7 @@ fn row_col(size: usize, a: &mut Vec<Vec<i32>>) {
 }
 
 // 列方向から先に処理する
-#[inline(never)]
-fn col_row(size: usize, a: &mut Vec<Vec<i32>>) {
+fn col_row(size: usize, a: &mut Vec<Vec<i64>>) {
     for i in 0..size {
         for j in 0..size {
             a[j][i] += 1;
