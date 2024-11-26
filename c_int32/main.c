@@ -3,15 +3,15 @@
 #include <time.h>
 
 // 配列の初期化
-int** setup(int size) {
-    int **a = malloc(size * sizeof(int*));
+int32_t** setup(int size) {
+    int32_t **a = malloc(size * sizeof(int32_t*));
     if (a == NULL) {
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 
     // size * size 分のメモリを一度に確保する
-    int *data = calloc(size * size, sizeof(int));
+    int32_t *data = calloc(size * size, sizeof(int32_t));
     if (data == NULL) {
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
@@ -26,7 +26,7 @@ int** setup(int size) {
 }
 
 // メモリの解放
-void cleanup(int size, int **a) {
+void cleanup(int size, int32_t **a) {
     if (a != NULL) {
         free(a[0]); // data のメモリ解放
         free(a);    // ポインタ配列 a のメモリ解放
@@ -34,7 +34,7 @@ void cleanup(int size, int **a) {
 }
 
 // 行方向から先に処理する
-void row_col(int size, int **a) {
+void row_col(int size, int32_t **a) {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             a[i][j] += 1;
@@ -43,7 +43,7 @@ void row_col(int size, int **a) {
 }
 
 // 列方向から先に処理する
-void col_row(int size, int **a) {
+void col_row(int size, int32_t **a) {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             a[j][i] += 1;
@@ -61,7 +61,7 @@ int main(int _argc, char *argv[]) {
 
     for (int iter = 0; iter < iterations; iter++) {
         // row_col関数の実行
-        int **a = setup(size);
+        int32_t **a = setup(size);
         struct timespec start, end;
         clock_gettime(CLOCK_MONOTONIC, &start);
         row_col(size, a);
