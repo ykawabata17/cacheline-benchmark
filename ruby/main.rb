@@ -42,9 +42,9 @@ def benchmark(iterations)
   end
 
   average_row_col_time = row_col_times.sum / iterations
-  average_col_row_time = col_row_times.sum / iterations
-
   puts "Average row_col function time: #{average_row_col_time.round(5)} seconds"
+
+  average_col_row_time = col_row_times.sum / iterations
   puts "Average col_row function time: #{average_col_row_time.round(5)} seconds"
 end
 

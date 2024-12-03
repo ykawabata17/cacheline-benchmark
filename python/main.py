@@ -22,7 +22,7 @@ def col_row(a):
 
 if __name__ == '__main__':
     row_col_time = timeit.timeit("row_col(a)", setup="from __main__ import row_col, a", number=ITERATIONS)
-    col_row_time = timeit.timeit("col_row(a)", setup="from __main__ import col_row, a", number=ITERATIONS)
-
     print(f"Average row_col function time: {(row_col_time / ITERATIONS):.5f} seconds")
+
+    col_row_time = timeit.timeit("col_row(a)", setup="from __main__ import col_row, a", number=ITERATIONS)
     print(f"Average col_row function time: {(col_row_time / ITERATIONS):.5f} seconds")
